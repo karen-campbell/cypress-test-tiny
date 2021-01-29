@@ -23,3 +23,18 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+
+Cypress.Commands.add("createAccount", (accountDetails) => {
+    cy.request({method:"POST", url: '/Create/Account', body: accountDetails, failOnStatusCode : false}).then(response => {
+        return response;
+      });
+});
+
+Cypress.Commands.add('navigateToLoginPage', (accountId) => {
+    cy.setAceAuthCookie();
+    cy.visit('' + '/Login', {
+        qs: {
+            id: accountId
+        }
+    });
+});
